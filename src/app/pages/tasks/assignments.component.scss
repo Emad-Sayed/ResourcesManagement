@@ -1,0 +1,59 @@
+@import "../../../assets/scss/settings/variables";
+
+.icon-dropdown {
+  padding:  10px;
+}
+.periods {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    background-color: $main-light-color;
+    padding: 1rem;
+    z-index: 5;
+    border-radius: $border-radius;
+
+    .e-form-group {
+      flex-basis: 50%;
+      margin-bottom: 10px;
+    }
+    
+    .custom-radio {
+      border-radius: 50%;
+      margin-right: 5px;
+      border: 2px solid $text-color;
+    }
+    .e-form-label {
+      display: flex;
+      align-items: center;
+      font-size: 1.6rem;
+    }
+    .e-form-radio {
+
+      &:checked ~ .custom-radio {
+        border-color: $second-color;
+      }
+    }
+  }
+.task__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+::ng-deep {
+  .icon-notice {
+    font-size: 15rem;
+    display: block;
+  }
+}
+.e-dark-btn {
+  background-color: #1C4B58;
+}
+.icon-dropdown{
+  color: $second-color;
+  margin-right: 20px;
+}

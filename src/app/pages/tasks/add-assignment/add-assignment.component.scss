@@ -1,0 +1,18 @@
+@import "../../../../assets/scss/settings/variables";
+
+.dx-texteditor.dx-editor-outlined::ng-deep {
+  border: none;
+
+  .dx-placeholder {
+    color: $second-color;
+    font-size: 1.8rem;
+    font-style: normal;
+  }
+}
+
+.e-form-control[type="date"] {
+  ~ .e-form-label--overInput {
+    background-color: #fff;
+    padding: 6px 20px 6px 0;
+  }
+}

@@ -1,0 +1,32 @@
+<section>
+    
+    <div class="g-actions">
+        <button routerLink="add"
+            class="e-btn e-secondary-btn e-btn  mr-2">
+            Add Admin
+        </button>
+    </div>
+
+    <div class="admins">
+        <div class="row">
+            <div class="col-md-6 col-lg-4" *ngFor="let admin of admins">
+                <div class="o-card admins__content">
+                    <span class="resources-icon icon-profile" *ngIf="!admin.photo"></span>
+                    
+                    <span class="o-image-upload__img o-image-upload__img--small mr-2" *ngIf="admin.photo">
+                        <img class="img-fluid" [src]="imgUrl + admin.photo" >
+                    </span>
+                    <h5>
+                        {{admin.userName}}
+                        <br>
+                        <span>{{admin.email}}</span>
+                    </h5>
+
+                    <!-- <span class="resources-icon icon-trash"></span> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>

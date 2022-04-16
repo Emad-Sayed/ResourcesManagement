@@ -1,0 +1,9 @@
+<div class="g-page-size">
+    <label for="sizing{{size}}" *ngFor="let size of [5, 10, 15];">
+      <input class="e-form-radio" type="radio" name="size" id="sizing{{size}}" (click)="pageSelected(size)"
+       [value]="size" [checked]="size === 5">
+
+      <span class="custom-radio">{{size}}</span>
+
+    </label>
+  </div>

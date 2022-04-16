@@ -1,0 +1,30 @@
+<!-- <marquee> -->
+<header>
+    <div class="title">
+        <h2  *ngIf="_authService.CurrentUserRole !== 'RESOURCE'">{{title}}</h2>
+        <h3 (click)="openProfile()"><small>Welcome Mr.</small> {{_authService.CurrentUserName}} <span class="resources-icon icon-info" title="Click to view info"></span></h3>
+        <p class="title__date">
+            {{now | date: 'MMM d, y, h:mm a'}}
+            <!-- <span class="resources-icon icon-switch" title="Logout" (click)="logout()"></span> -->
+        </p>
+
+        
+    </div>
+</header>
+<!-- </marquee> -->
+
+<dx-popup
+  [width]="640"
+  [height]="350"
+  [showTitle]="false"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="profilePopup"
+>
+  <div
+    *dxTemplate="let data of 'content'"
+    class="d-flex flex-column align-content-center"
+  >
+    <app-user-details *ngIf="profilePopup" [userAction]="'showProfile'" (closePopup)="profilePopup = false"></app-user-details>
+  </div>
+</dx-popup>

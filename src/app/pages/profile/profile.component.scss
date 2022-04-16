@@ -1,0 +1,186 @@
+@import "../../../assets/scss/settings/variables";
+
+.o-section-content {
+  background-color: transparent;
+  padding: 0;
+  box-shadow: unset;
+  height: calc(100vh - 142px);
+
+  @media screen and (max-width: 992px) {
+    height: auto;
+  }
+}
+
+.o-card {
+  overflow: hidden;
+  background-color: #fff;
+}
+.tasks {
+  overflow: auto;
+  max-height: calc(100vh - 200px);
+  .task__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .e-secondary-btn {
+      background-color: $success;
+      border-radius: 50px;
+    }
+  }
+}
+
+.timers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  height: calc(25% - 10px);
+  padding: 0 20px;
+
+  &__btn {
+    border: 1px solid $main-color;
+    background-color: transparent;
+    color: $main-color;
+    border-radius: 30px;
+    padding-left: 5px;
+    padding-right: unset;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .resources-icon {
+      border-radius: 50%;
+      background-color: $main-color;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 5px;
+      position: relative;
+      left: -20px;
+
+      &::before {
+        color: #fff;
+        font-size: 12px;
+      }
+    }
+  }
+}
+dx-scheduler::ng-deep {
+  height: 100%;
+  padding: 15px;
+
+  .dx-item {
+    display: none;
+  }
+  .dx-scheduler-date-table-cell {
+    border-radius: 10px;
+    background-color: #fafafa;
+    border: none;
+    text-align: center;
+  }
+  .dx-scrollable-wrapper {
+    background-color: #fff;
+  }
+  .dx-scheduler-header-panel-cell {
+    border: none;
+  }
+  .dx-scheduler-header {
+    background-color: #fff;
+    border: none;
+    display: flex;
+    justify-content: center;
+  }
+  .dx-scheduler-navigator .dx-button {
+    border: none;
+    margin: 0 5px;
+  }
+
+  .dx-scheduler-navigator-previous,
+  .dx-scheduler-navigator-next {
+    background-color: $green;
+    border-radius: 50px;
+    height: 30px;
+    .dx-icon {
+      color: #fff;
+    }
+  }
+  .dx-scheduler-navigator {
+    max-width: 50%;
+  }
+  .dx-scheduler-navigator-caption {
+    background-color: transparent;
+    font-size: 18px;
+  }
+  .dx-scheduler-view-switcher {
+    display: none;
+  }
+  // .dx-scheduler-appointment-collector {
+  //   position: relative;
+  //   top: 25px;
+  // }
+  .dx-scheduler-work-space {
+    border: none;
+  }
+}
+  .icon-notice {
+    font-size: 15rem;
+    display: block;
+  }
+
+@media screen and (max-width: 992px) {
+  .timers {
+    height: auto;
+    &__btn {
+      flex-basis: 100%;
+      margin: 10px 0;
+    }
+  }
+  .o-card {
+    height: auto !important;
+    margin-top: 10px;
+  }
+  dx-scheduler::ng-deep {
+    .dx-scheduler-navigator {
+      max-width: 100%;
+    }
+    .dx-scheduler-view-switcher-label {
+      display: none;
+    }
+  }
+}
+
+.g-page-control {
+  position: relative;
+}
+
+h5 {
+  color: $dark-blue;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-align: center;
+}
+.o-tabs__btn--active {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    width: 0;
+    margin: auto;
+    border-top: 5px solid $main-color;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+}
+
+.e-form-control {
+  padding: 1rem 5px;
+}

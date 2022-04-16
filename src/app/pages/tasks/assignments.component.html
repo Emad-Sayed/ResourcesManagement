@@ -1,0 +1,290 @@
+<section class="o-section-content tasks">
+  <div class="tasks__heading">
+    <div class="position-relative">
+      <div class="periods" *ngIf="statesShown">
+        <fieldset class="e-form-group" *ngFor="let state of states">
+          <label [for]="state.name" class="e-form-label">
+            <input
+              class="e-form-radio"
+              type="radio"
+              name="states"
+              [value]="state.value"
+              [id]="state.name"
+              [checked]="state.value === selectedStateId"
+              (change)="onStateChange($event.target.value)"
+            />
+            <span class="custom-radio"></span>
+            {{ state.name }}
+          </label>
+        </fieldset>
+      </div>
+      <!-- Sun, Jun 21, 2020 -->
+      <div class="d-flex align-items-center">
+        <h4>
+          All {{ addAssignment }}s
+          <span
+            class="resources-icon icon-dropdown"
+            (click)="statesShown = !statesShown"
+          ></span>
+        </h4>
+        <button
+          [disabled]="!isCheckAvailable"
+          class="e-secondary-btn e-btn e-dark-btn"
+          (click)="checkAllTasks()"
+        >
+          {{ allChecked ? "Unselect All" : "Select All" }}
+        </button>
+      </div>
+    </div>
+
+    <div class="tasks__actions">
+      <button
+        class="e-btn e-secondary-btn mr-2"
+        routerLink="add-assignment"
+        [disabled]="checkedTaskIds.length"
+      >
+        Add {{ addAssignment }}
+      </button>
+      <button
+        class="e-btn e-secondary-btn e-btn e-btn--success mr-2"
+        (click)="approvePopup = true"
+        [disabled]="!checkedTaskIds.length"
+      >
+        Approve
+      </button>
+
+      <app-search></app-search>
+    </div>
+  </div>
+
+  <div class="tasks__wrapper">
+    <div class="task" *ngFor="let assign of assignments">
+      <div class="task__head">
+        <fieldset class="e-form-group">
+          <label class="e-form-label">
+            <input
+              class="e-form-control--checkbox"
+              type="checkbox"
+              [value]="assign.taskId"
+              [checked]="assign.checked || assign.taskStateId === 3"
+              (change)="onTaskCheck($event.target.checked, assign)"
+              [disabled]="
+                !assign.approvedByResource || assign.taskStateId === 3
+              "
+            />
+            <span class="custom-checkbox"></span>
+          </label>
+        </fieldset>
+
+        <h5 class="task__title">
+          {{ assign.name }}
+          <button
+            class="e-secondary-btn e-btn--failure"
+            *ngIf="assign.approvedByResource && assign.taskStateId != 3"
+            (click)="onRejectBtnClick(assign)"
+          >
+            Reject
+          </button>
+        </h5>
+      </div>
+
+      <div class="task__content">
+        <p class="task__desc">
+          {{ assign.description }}
+
+          <ng-container *ngIf="assign?.comment">
+            <br />
+            <strong class="text-danger">Reason:</strong>
+            {{ assign.comment }}
+          </ng-container>
+        </p>
+
+        <div class="task__states">
+          <div>
+            <span class="resources-icon icon-play"></span>
+            {{ assign.startDate }}
+          </div>
+          <div>
+            <span class="resources-icon icon-stop"></span>
+            {{ assign.endDate }}
+          </div>
+
+          <mark
+            class="state-label"
+            [ngClass]="
+              assign.taskStateId == 1
+                ? 'state-label--new'
+                : assign.taskStateId == 2
+                ? 'state-label--rejected'
+                : 'state-label--accepted'
+            "
+          >
+            {{
+              assign.taskStateId == 1
+                ? "new"
+                : assign.taskStateId == 2
+                ? "rejected"
+                : "accepted"
+            }}
+          </mark>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g-page-control">
+    <app-pagination-size
+      (selectedPageSizeEvent)="onChangeSize($event)"
+    ></app-pagination-size>
+
+    <div class="g-page-pagination">
+      <app-pagination
+        [currenPage]="query.pageNumber"
+        [totalPagesSize]="pagesTotalNumber"
+        (selectedPageEvent)="onChangePage($event)"
+      ></app-pagination>
+    </div>
+  </div>
+</section>
+
+<!-- approve popup -->
+<dx-popup
+  [width]="340"
+  [height]="340"
+  [showTitle]="false"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [(visible)]="approvePopup"
+>
+  <div
+    *dxTemplate="let data of 'content'"
+    class="d-flex flex-column align-content-center"
+  >
+    <span class="resources-icon icon-notice text-center"></span>
+
+    <p class="text-center my-3">
+      Are you sure you want to approve {{ checkedTaskIds?.length }} Tasks ?
+    </p>
+
+    <div class="d-flex justify-content-center">
+      <button
+        class="e-secondary-btn e-btn--grey mr-3"
+        (click)="approvePopup = false"
+      >
+        Cancel
+      </button>
+      <button class="e-secondary-btn e-btn--success" (click)="onApproveTask()">
+        Approve
+      </button>
+    </div>
+  </div>
+</dx-popup>
+
+<!-- rejection popup -->
+<dx-popup
+  [width]="540"
+  [showTitle]="false"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="rejectPopup"
+>
+  <div
+    *dxTemplate="let data of 'content'"
+    class="d-flex flex-column align-content-center"
+  >
+    <div class="o-tabs">
+      <button
+        class="o-tabs__btn"
+        [ngClass]="{ 'o-tabs__btn--active': activeTab === 'reject' }"
+        (click)="activeTab = 'reject'"
+      >
+        Rejection
+      </button>
+      <button
+        class="o-tabs__btn"
+        [ngClass]="{ 'o-tabs__btn--active': activeTab === 'reassign' }"
+        (click)="activeTab = 'reassign'"
+      >
+        Reassign To
+      </button>
+    </div>
+
+    <form [formGroup]="reassignForm" *ngIf="rejectPopup">
+      <fieldset class="e-form-group e-form-group--withMargin">
+        <label class="e-form-label" for="reason"> Reason </label>
+        <textarea
+          formControlName="reason"
+          class="e-form-control e-form-control--textarea"
+          id="reason"
+        ></textarea>
+      </fieldset>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <fieldset class="e-form-group e-form-group--withMargin">
+            <label class="e-form-label" for="startDate"> Start Date </label>
+            <!-- <input
+              formControlName="startDate"
+              class="e-form-control"
+              type="date"
+              id="startDate"
+              placeholder=" "
+              aria-required="true"
+            /> -->
+            <dx-date-box [(value)]="selectedAssign.startDate" type="date">
+            </dx-date-box>
+          </fieldset>
+        </div>
+        <div class="col-lg-6">
+          <fieldset class="e-form-group e-form-group--withMargin">
+            <label class="e-form-label" for="endDate"> End Date </label>
+            <!-- 
+            <input
+              formControlName="endDate"
+              class="e-form-control"
+              type="date"
+              id="endDate"
+              placeholder=" "
+              aria-required="true"
+            /> -->
+            <dx-date-box [(value)]="selectedAssign.endDate" type="date">
+            </dx-date-box>
+          </fieldset>
+        </div>
+      </div>
+
+      <fieldset
+        class="e-form-group e-form-group--withMargin"
+        *ngIf="activeTab == 'reassign'"
+      >
+        <label class="e-form-label e-form-label--overInput">
+          Reassign To
+        </label>
+
+        <dx-select-box
+          #selectBox
+          [dataSource]="names"
+          displayExpr="userName"
+          [placeholder]="'Name'"
+          stylingMode="underline"
+          [searchEnabled]="true"
+          (onInput)="onSearchName($event.event.target.value)"
+          (onSelectionChanged)="onSelectName($event)"
+          [inputAttr]="{ class: 'e-form-control' }"
+        ></dx-select-box>
+      </fieldset>
+
+      <div class="d-flex justify-content-center">
+        <button
+          class="e-secondary-btn e-btn--grey mr-3"
+          (click)="rejectPopup = false"
+        >
+          Cancel
+        </button>
+        <button class="e-secondary-btn e-btn--failure" (click)="onRejectTask()">
+          {{ activeTab === "reject" ? "Reject" : "Reassign" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</dx-popup>

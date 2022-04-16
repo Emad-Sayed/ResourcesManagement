@@ -1,0 +1,21 @@
+<div class="g-page-pagination">
+    <span class="resources-icon icon-most-left"></span>
+    <span (click)="pageSelected(currenPage-1)" class="resources-icon icon-arrow-left"></span>
+    <div class="pages">
+      <label for="paging{{page.Page}}" *ngFor="let page of pagesLengthView let i = index">
+        <input 
+        class="e-form-radio" 
+        type="radio" 
+        name="pagination" 
+        id="paging{{page.Page}}"
+        [value]="page.Page"
+        [checked]="(page.Page)==currenPage"
+        (click)="pageSelected(page.Page)">
+  
+        <span class="custom-radio">{{page.Page}}</span>
+  
+      </label>
+    </div>
+    <span (click)="pageSelected(currenPage+1)" class="resources-icon icon-arrow-right"></span>
+    <span class="resources-icon icon-most-right"></span>
+  </div>

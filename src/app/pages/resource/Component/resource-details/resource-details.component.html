@@ -1,0 +1,170 @@
+<dx-accordion
+  (onItemTitleClick)="openAccordionItem($event)"
+  [collapsible]="true"
+  [multiple]="false"
+  [selectedItems]="[]"
+>
+  <dxi-item title="Info">
+    <div class="d-flex">
+      <div class="o-image-upload">
+        <span
+          class="resources-icon icon-profile"
+          *ngIf="!resourceDetail?.photo"
+        ></span>
+        <span class="o-image-upload__img" *ngIf="resourceDetail?.photo">
+          <img class="img-fluid" [src]="imgUrl + resourceDetail.photo" />
+        </span>
+      </div>
+      <div class="resource-info">
+        <h5 *ngIf="resourceDetail?.email">Contact Info</h5>
+        <p>{{ resourceDetail?.email }}</p>
+
+        <h5>Work Info</h5>
+        <p *ngIf="resourceDetail?.jobTitle">{{ resourceDetail?.jobTitle }}</p>
+        <p *ngIf="resourceDetail?.costPerHour">
+          {{ resourceDetail?.costPerHour }}
+        </p>
+      
+        
+        <label class="d-block text-right">
+          Last Logged
+          {{ resourceDetail?.lastLogged | date }}
+        </label>
+      
+      
+      </div>
+    </div>
+
+        
+        
+    <button
+      class="e-secondary-btn d-block mx-auto"
+      [routerLink]="['/resources/add']"
+      [queryParams]="{ editUserId: resourceId }"
+    >
+      Edit
+    </button>
+  </dxi-item>
+  <dxi-item title="Attendance">
+    <div class="table-responsive">
+      <table class="o-table">
+        <thead class="o-table__head">
+          <tr>
+            <th class="o-table__th" scope="col">Date</th>
+            <th class="o-table__th" scope="col">Worked Hours</th>
+          </tr>
+        </thead>
+        <tbody class="o-table__body">
+          <tr class="o-table__row" *ngFor="let att of attendances">
+            <td class="o-table__data">
+              {{ att.start | date }}
+            </td>
+            <td class="o-table__data">{{ att.workedHours }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-pagination
+      [currenPage]="attendanceTotalPages?.current"
+      [totalPagesSize]="attendanceTotalPages?.num"
+      (selectedPageEvent)="changeAttendancePage($event)"
+    ></app-pagination>
+  </dxi-item>
+  <dxi-item title="Tasks">
+    <div class="tasks">
+      <div class="tasks__heading">
+        <div class="tasks__actions">
+          <button
+            class="e-btn e-secondary-btn mr-2"
+            routerLink="/assignment/1/add-assignment"
+            [queryParams]="{ resource: resourceId }"
+          >
+            Add Task
+          </button>
+        </div>
+      </div>
+      <div class="tasks__wrapper">
+        <div class="task" *ngFor="let task of tasks">
+          <div class="task__head">
+            <h5 class="task__title">{{ task.name }}</h5>
+          </div>
+
+          <div class="task__content">
+            <p class="task__desc">
+              {{ task.description }}
+            </p>
+
+            <div class="task__states">
+              <div>
+                <span class="resources-icon icon-play"></span>
+                {{ task.startDate }}
+              </div>
+              <div>
+                <span class="resources-icon icon-stop"></span>
+                {{ task.endDate }}
+              </div>
+
+              <mark class="state-label state-label--new"> new </mark>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="g-page-pagination">
+        <app-pagination
+          [currenPage]="tasksTotalPages?.current"
+          [totalPagesSize]="tasksTotalPages?.num"
+          (selectedPageEvent)="changeTaskPage($event)"
+        ></app-pagination>
+      </div>
+    </div>
+  </dxi-item>
+  <dxi-item title="Trainings">
+    <div class="tasks">
+      <div class="tasks__heading">
+        <div class="tasks__actions">
+          <button
+            class="e-btn e-secondary-btn mr-2"
+            routerLink="/assignment/2/add-assignment"
+            [queryParams]="{ resource: resourceId }"
+          >
+            Add Training
+          </button>
+        </div>
+      </div>
+      <div class="tasks__wrapper">
+        <div class="task" *ngFor="let training of trainings">
+          <div class="task__head">
+            <h5 class="task__title">{{ training.name }}</h5>
+          </div>
+
+          <div class="task__content">
+            <p class="task__desc">
+              {{ training.description }}
+            </p>
+
+            <div class="task__states">
+              <div>
+                <span class="resources-icon icon-play"></span>
+                {{ training.startDate }}
+              </div>
+              <div>
+                <span class="resources-icon icon-stop"></span>
+                {{ training.endDate }}
+              </div>
+
+              <mark class="state-label state-label--new"> new </mark>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="g-page-pagination">
+        <app-pagination
+          [currenPage]="trainingTotalPages?.current"
+          [totalPagesSize]="trainingTotalPages?.num"
+          (selectedPageEvent)="changeTrainingPage($event)"
+        ></app-pagination>
+      </div>
+    </div>
+  </dxi-item>
+</dx-accordion>

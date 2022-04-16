@@ -1,0 +1,199 @@
+<div class="row">
+  <!-- <div class="col-auto" 
+  *ngIf="
+  userAction === 'showProfile' || 
+  userAction === 'editMode'">
+    <span class="resources-icon icon-user"></span>
+  </div> -->
+  <div class="col position-relative">
+    <ng-container *ngIf="userAction !== 'resetPass'; else resetPassTemp">
+      <div class="icons">
+        <span class="resources-icon icon-pencil" (click)="userAction = 'editMode'" *ngIf="userAction === 'showProfile'"></span>
+        <span class="resources-icon icon-save" (click)="saveUserEdit()" *ngIf="userAction === 'editMode'"></span>
+        <span class="resources-icon icon-cancel" (click)="closePopup.emit()"></span>
+      </div>
+
+      <form [formGroup]="userProfileForm" class="login-form">
+        <fieldset class="e-form-group e-form-group--withMargin">
+          <input
+            formControlName="username"
+            class="e-form-control"
+            type="text"
+            autocomplete="username"
+            id="username"
+            aria-required="true"
+            [readOnly]="userAction === 'showProfile'"
+            [ngClass]="{
+              'e-form-control--readOnly': userAction === 'showProfile'
+            }"
+          />
+
+          <label
+            class="e-form-label e-form-label--overInput"
+            for="username"
+            aria-label="username"
+          >
+            Username
+          </label>
+        </fieldset>
+
+        <fieldset class="e-form-group e-form-group--withMargin">
+          <input
+            formControlName="userEmail"
+            class="e-form-control"
+            type="email"
+            autocomplete="current-email"
+            aria-required="true"
+            id="pass"
+            [readOnly]="userAction === 'showProfile'"
+            [ngClass]="{
+              'e-form-control--readOnly': userAction === 'showProfile'
+            }"
+          />
+
+          <label
+            class="e-form-label e-form-label--overInput"
+            for="pass"
+            aria-label="email"
+          >
+            Email
+          </label>
+        </fieldset>
+
+        <fieldset class="e-form-group e-form-group--withMargin">
+          <input
+            formControlName="jobTitle"
+            class="e-form-control"
+            type="text"
+            id="jobTitle"
+            [readOnly]="userAction === 'showProfile'"
+            [ngClass]="{
+              'e-form-control--readOnly': userAction === 'showProfile'
+            }"
+          />
+
+          <label
+            class="e-form-label e-form-label--overInput"
+            for="jobTitle"
+            aria-label="jobTitle"
+          >
+            Job Title
+          </label>
+        </fieldset>
+
+        <fieldset
+          class="e-form-group e-form-group--withMargin"
+          *ngIf="userAction === 'showProfile'"
+        >
+          <button class="e-text-btn" (click)="resetPassword()">
+            Reset Password
+          </button>
+        </fieldset>
+
+        <!-- <fieldset class="e-form-group e-form-group--withMargin" 
+        *ngIf="userAction === 'newUser'">
+          <input 
+          formControlName="password"
+          class="e-form-control"
+          type="password"
+          autocomplete="current-password"
+          aria-required="true"
+          id="pass">
+  
+          <label 
+          class="e-form-label e-form-label--overInput"
+          for="pass"
+          aria-label="email">
+            Password*
+          </label>
+        </fieldset> -->
+
+        <!-- <fieldset class="e-form-group e-form-group--withMargin" 
+        *ngIf="userAction === 'newUser'">
+          <select 
+          formControlName="userType"
+          class="e-form-control"
+          autocomplete="current-password"
+          aria-required="true"
+          id="userType">
+          <option value="Manager">Manager</option>
+          <option value="Customer">Customer</option>
+          </select>
+  
+          <label 
+          class="e-form-label e-form-label--overInput"
+          for="userType"
+          aria-label="User Type">
+          User Type*
+          </label>
+        </fieldset> -->
+      </form>
+    </ng-container>
+
+    <ng-template #resetPassTemp>
+      <form [formGroup]="resetPassForm">
+        <div class="icons">
+          <span class="resources-icon icon-save" (click)="changPassword()" *ngIf="userAction === 'resetPass'"></span>
+          <span class="resources-icon icon-cancel" (click)="closePopup.emit()"></span>
+        </div>
+        <fieldset class="e-form-group e-form-group--withMargin">
+          <input
+            formControlName="oldPassword"
+            class="e-form-control"
+            type="password"
+            aria-required="true"
+            id="oldPassword"
+          />
+
+          <label
+            class="e-form-label e-form-label--overInput"
+            for="oldPassword"
+          >
+            Old Password*
+          </label>
+        </fieldset>
+        <fieldset class="e-form-group e-form-group--withMargin">
+          <input
+            formControlName="newPassword"
+            class="e-form-control"
+            type="password"
+            aria-required="true"
+            id="newPassword"
+          />
+
+          <label
+            class="e-form-label e-form-label--overInput"
+            for="newPassword"
+            aria-label="New Password"
+          >
+            New Password*
+          </label>
+        </fieldset>
+
+        <fieldset class="e-form-group e-form-group--withMargin">
+          <input
+            formControlName="confirmPassword"
+            class="e-form-control"
+            type="password"
+            aria-required="true"
+            id="confirmPassword"
+          />
+
+          <label
+            class="e-form-label e-form-label--overInput"
+            for="confirmPassword"
+            aria-label="Confirm Password"
+          >
+            Confirm Password*
+          </label>
+        </fieldset>
+
+        <p *ngIf="
+        resetPassForm.controls.newPassword.value !== resetPassForm.controls.confirmPassword.value
+        &&
+        resetPassForm.dirty
+        ">Password doesn't match</p>
+      </form>
+    </ng-template>
+  </div>
+</div>

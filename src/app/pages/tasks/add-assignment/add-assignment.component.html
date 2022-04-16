@@ -1,0 +1,136 @@
+<section class="o-section-content">
+  <div class="o-section-content__heading">
+    <h3>New {{assignmentTitle}}</h3>
+
+    <div class="o-actions">
+      <button class="e-text-btn e-text-btn--grey" routerLink="../">
+        Cancel
+      </button>
+      <button class="e-secondary-btn" (click)="addTask()" [disabled]="addTaskForm.invalid">Add</button>
+    </div>
+  </div>
+
+  <form class="e-form" [formGroup]="addTaskForm">
+    <div *ngIf="!isSpecificResource" class="e-form__section">
+      <h4 class="e-form__title">Resource Info</h4>
+      <div class="row">
+        <div class="col-6">
+          <fieldset class="e-form-group e-form-group--withMargin">
+            <!-- <input
+              formControlName="resourceName"
+              class="e-form-control"
+              type="text"
+              id="resourceName"
+              aria-required="true"
+            /> -->
+            <dx-select-box  #selectBox [dataSource]="names"
+                      displayExpr="userName"
+                      [placeholder]="'Name'"
+                      stylingMode="underline"
+                      [searchEnabled]="true"
+                      (onInput)="onSearchName($event.event.target.value)"
+                      (onSelectionChanged)="onSelectName($event)"
+                      [inputAttr]="{ class: 'e-form-control'}"></dx-select-box>
+
+            <!-- <label
+              class="e-form-label e-form-label--overInput"
+              for="resourceName"
+            >
+              Name
+            </label> -->
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <div class="e-form__section">
+      <h4 class="e-form__title">{{assignmentTitle}} Info</h4>
+
+      <div class="row">
+        <div class="col-6">
+          <fieldset class="e-form-group e-form-group--withMargin">
+            <input
+              formControlName="name"
+              class="e-form-control"
+              type="text"
+              id="taskName"
+              aria-required="true"
+            />
+
+            <label class="e-form-label e-form-label--overInput" for="taskName">
+              {{assignmentTitle}} Name
+            </label>
+          </fieldset>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <fieldset class="e-form-group e-form-group--withMargin">
+                <input
+                  formControlName="startDate"
+                  class="e-form-control"
+                  type="date"
+                  id="startDate"
+                  placeholder=" "
+                  aria-required="true"
+                />
+
+                <label
+                  class="e-form-label e-form-label--overInput"
+                  for="startDate"
+                >
+                  Start Date
+                </label>
+              </fieldset>
+            </div>
+            <div class="col-lg-6">
+              <fieldset class="e-form-group e-form-group--withMargin">
+                <input
+                  formControlName="endDate"
+                  class="e-form-control"
+                  type="date"
+                  id="endDate"
+                  placeholder=" "
+                  aria-required="true"
+                />
+
+                <label
+                  class="e-form-label e-form-label--overInput"
+                  for="endDate"
+                >
+                  End Date
+                </label>
+              </fieldset>
+            </div>
+          </div>
+
+          <fieldset class="e-form-group">
+            <select class="e-form-control" id="priority" formControlName="priorityId">
+              <option value="1">Low</option>
+              <option value="2">Medium</option>
+              <option value="3">High</option>
+            </select>
+
+            <label class="e-form-label e-form-label--overInput" for="priority">
+              Priority
+            </label>
+          </fieldset>
+        </div>
+        <div class="col-6">
+          <fieldset class="e-form-group h-100">
+            <textarea
+              formControlName="description"
+              class="e-form-control e-form-control--textarea"
+              type="text"
+              id="description"
+              aria-required="true"
+            ></textarea>
+
+            <label class="e-form-label e-form-label--overInput" for="description">
+              Description
+            </label>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

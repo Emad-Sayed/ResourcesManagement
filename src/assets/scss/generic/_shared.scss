@@ -1,0 +1,317 @@
+html {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  font-size: 62.5%;
+  color: $primary-dark-color;
+}
+body {
+  font-size: 14px; /* px fallback */
+  font-size: 1.4rem; /* default font-size for document */
+  overflow-x: hidden;
+  letter-spacing: 1px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+    margin-left: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $second-color;
+}
+
+small {
+  font-weight: normal;
+}
+.dx-overlay-shader{
+  background-image: linear-gradient(to bottom, rgba(102, 19, 32, 0.9), rgba(31, 30, 46, .9));
+}
+.dx-texteditor.dx-editor-outlined:not(.dx-numberbox-spin)
+.dx-texteditor.dx-editor-outlined:not(.dx-timeview-format12) {
+  border: none;
+  border-bottom: 1px solid $primary-dark-color;
+  padding: 2rem 5px;
+}
+.dx-overlay-wrapper{
+  opacity: 1;
+  z-index: 55555 !important;
+  .dx-overlay-content {
+    background: transparent;
+    border: unset;
+    box-shadow: none;
+    background-color: #fff;
+    border-radius: 10px !important;
+    overflow: hidden;
+  }
+  .dx-popup-title {
+    // padding: 6px 4rem;
+
+    .dx-toolbar-item {
+      max-width: unset !important;
+      font-size: 22px;
+      font-weight: 500;
+      padding-top: 20px !important;
+    }
+  }
+  .dx-popup-title.dx-toolbar,
+  .dx-state-focused.dx-overlay-content{
+    border: none;
+  }
+  .dx-popup-content {
+    background-color: #fff;
+    // padding: 4rem;
+    // border-radius: 20px;
+    height: auto !important;
+  }
+
+  .popup-actions {
+    position: absolute;
+    top: -30px;
+    right: 0;
+  
+    border-radius: 20px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+  
+    padding: 30px;
+
+    background-color: #fff;
+
+    .resources-icon {
+      cursor: pointer;
+    }
+
+    .icon-pencil, .icon-save {
+      margin-right: 20px;
+    }
+  }
+}
+.dx-scheduler-appointment-collector {
+  width: 20px !important;
+}
+.dx-appointment-form-switch {
+  display: none !important;
+}
+
+.dx-scrollable-wrapper {
+  background-color: $main-light-color;
+}
+
+.g-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .resources-icon {
+    cursor: pointer;
+  }
+
+  .g-action {
+    margin-left: 15px;
+  }
+}
+
+.g-page-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  order: 2;
+}
+.g-page-pagination {
+  display: flex;
+  align-items: center;
+  
+  .resources-icon {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .pages {
+    margin: 0 20px 0 10px;
+  }
+}
+
+.g-total {
+  font-size: 2.5rem;
+  text-align: center;
+  width: 100%;
+  color: $main-color;
+  margin-top: 10px;
+}
+// table styles 
+.table-responsive {
+  overflow-y: auto;
+  max-height: calc(100% - 120px);
+}
+
+// jw pagination override styles 
+.jw-pagination {
+  .page-link {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin-right: 5px;
+    cursor: pointer;
+    @include transition(all);
+    z-index: unset !important;
+    padding: 2px 6px !important;
+  }
+  .page-item.active .page-link {
+    background-color: $second-color;
+    color: #fff;
+  }
+  .next-item,
+  .last-item,
+  .previous-item,
+  .first-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &:after {
+      /* use !important to prevent issues with browser extensions that change fonts */
+      font-family: 'resources-icons' !important;
+      speak: never;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+    
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    &.disabled {
+      &::after {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    .page-link {
+      opacity: 0;
+      position: absolute;
+      width: 14px;
+      overflow: hidden;
+    }
+  }
+
+  .next-item {
+    margin: 0 10px;
+    &::after {
+      content: "\e913";
+      color: #1ba5b9;
+    }
+  }
+  .last-item {
+    &::after {
+      content: "\e910";
+      color: #0f7483;
+    }
+  }
+  .previous-item {
+    margin: 0 10px;
+    &::after {
+      content: "\e912";
+      color: #1ba5b9;
+    }
+  }
+  .first-item {
+    &::after {
+      content: "\e911";
+      color: #0f7483;
+    }
+  }
+}
+
+// dev extreme accordion styles 
+.dx-accordion-item {
+  border: unset;
+  box-shadow: $box-shadow;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  &.closed {
+    height: 60px !important;
+  }
+  .dx-state-focused {
+    border: none !important;
+  }
+}
+.dx-accordion-item-title {
+  padding: 18px;
+}
+.dx-accordion-item-title:before {
+  color: $light-blue;
+}
+.dx-accordion {
+  background-color: transparent;
+}
+
+// small gutters for bootstrap grid
+.sm-gutters {
+  margin-right: -5px;
+  margin-left: -5px;
+  [class*="col"],
+  [class*=" col"] {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
+
+tr:first-child th:first-child  {
+border-top-left-radius: 6px !important;
+border-bottom-left-radius: 6px !important;
+}
+tr:first-child th:last-child  {
+border-top-right-radius: 6px !important;
+border-bottom-right-radius: 6px !important;
+}
+tr td:first-child  {
+border-bottom-left-radius: 6px !important;border-top-left-radius: 6px !important;
+}
+tr td:last-child  {
+border-bottom-right-radius: 6px !important;border-top-right-radius: 6px !important;
+}
+table { border-spacing: 0 !important; border: 0 !important; margin:0px !important; width:100% !important;}
+
+.state-label {
+  padding: 4px;
+  color: #fff;
+  border-radius: 2px;
+  &--new {
+    background-color: $lemon;
+  }
+  &--rejected {
+    background-color: $failure;
+  }
+  &--accepted {
+    background-color: green;
+  }
+}
+.text{
+  &--pending {
+    color: $yellow;
+  }
+  &--rejected {
+    color: $failure;
+  }
+  &--accepted {
+    color: #5BB721;
+  }
+}
+
+.flex-basis-100 {
+  flex-basis: calc(100% - 160px);
+}

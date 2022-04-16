@@ -1,0 +1,51 @@
+<aside class="aside" [ngClass]="{ 'aside--menuOpened': responsiveMenuOpened }">
+  <!-- #region side nav logo -->
+  <div class="logo">
+    <picture>
+      <!-- <source media="(max-width: 768px)" srcset="../../../../assets/images/logo.svg"> -->
+      <source
+        media="(max-width: 992px)"
+        srcset="../../../../assets/images/logo-horizontal.svg"
+      />
+      <img
+        class="img-fluid"
+        src="../../../../assets/images/logo.svg"
+        alt="resources logo "
+      />
+    </picture>
+  </div>
+  <!-- #endregion side nav logo -->
+
+  <div
+    class="hamburger-menu"
+    [ngClass]="{ 'hamburger-menu--menuOpened': responsiveMenuOpened }"
+    (click)="responsiveMenuOpened = !responsiveMenuOpened"
+  >
+    <span class="hamburger-menu__icon"></span>
+  </div>
+
+  <!-- #region side navigation list -->
+  <nav
+    class="nav-list"
+    [ngStyle]="{
+      'align-content': navLinks[0].title === 'Profile' ? 'flex-start' : 'center'
+    }"
+  >
+    <a
+      class="nav-list__link e-link--noStyle e-icon-link"
+      *ngFor="let item of navLinks"
+      [routerLink]="item.router"
+      routerLinkActive="e-icon-link--active"
+      [ngClass]="{ 'nav-list__profile': item.title === 'Admins' }"
+    >
+      <span class="resources-icon {{ item.iconClass }}"></span>
+      {{ item.title }}
+    </a>
+
+    <a class="nav-list__link e-link--noStyle e-icon-link" (click)="logOut()">
+      <span class="resources-icon icon-switch"></span>
+      Logout
+    </a>
+  </nav>
+  <!-- #endregion side navigation list -->
+</aside>

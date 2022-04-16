@@ -1,0 +1,29 @@
+@import "../../../../../assets/scss/settings/variables";
+
+::ng-deep {
+  .g-page-pagination {
+    margin-top: 10px;
+  }
+
+  .resource-info {
+    flex-basis: 100%;
+    h5 {
+      text-decoration: underline;
+      font-weight: 400;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    p {
+      color: $second-color;
+      background-color: #F5F5F5;
+      padding: 12px;
+      &:nth-child(odd) {
+        background-color: #FCFCFC;
+      }
+    }
+    .e-secondary-btn {
+      margin: auto;
+      display: block;
+    }
+  }
+}

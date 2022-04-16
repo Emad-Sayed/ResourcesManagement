@@ -1,0 +1,63 @@
+<section class="o-section-content">
+
+  <div class="o-section-content__heading">
+    <h4 class="e-card-title">
+      All Resources
+    </h4>
+
+    <div class="g-actions">
+
+      <div class="g-actions">
+        <button routerLink="add" class="e-btn e-secondary-btn e-btn  mr-2">
+          Add Resource
+        </button>
+      </div>
+      <app-search></app-search>
+
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="o-table table">
+      <thead class="o-table__head">
+        <tr>
+          <th class="o-table__th" scope="col">id</th>
+          <th class="o-table__th" scope="col">Name</th>
+          <th class="o-table__th" scope="col">Job Title</th>
+          <th class="o-table__th" scope="col">Cost Per Hour</th>
+          <th class="o-table__th" scope="col">Action</th>
+        </tr>
+      </thead>
+
+      <tbody class="o-table__body">
+        <tr class="o-table__row" *ngFor="let resource of resources">
+          <td class="o-table__data">{{resource.id}}</td>
+          <td class="o-table__data">{{resource.userName}}</td>
+          <td class="o-table__data">{{resource.jobTitle}}</td>
+          <td class="o-table__data">{{resource.costPerHour}}</td>
+          <td class="o-table__data">
+            <a routerLink="/resources/{{resource.id}}" title="View resource">
+              <span class="resources-icon icon-info"></span>
+            </a>
+            <!-- <a (click)="delete(resource.id)" title="Delete resource">
+                  <span class="resources-icon icon-trash"></span>
+                </a> -->
+          </td>
+        </tr>
+      </tbody>
+
+
+    </table>
+  </div>
+
+
+
+
+  <div class="g-page-control">
+    <app-pagination-size (selectedPageSizeEvent)="onChangeSize($event)"></app-pagination-size>
+    <div class="g-page-pagination">
+      <app-pagination [currenPage]="1" [totalPagesSize]="pagesTotalNumber" (selectedPageEvent)="onChangePage($event)">
+      </app-pagination>
+    </div>
+  </div>
+</section>

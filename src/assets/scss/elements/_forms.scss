@@ -1,0 +1,188 @@
+.e-form-group {
+  position: relative;
+
+  &--withMargin {
+    margin-bottom: 2rem;
+  }
+}
+
+.e-form-control {
+  width: 100%;
+  
+  border: unset;
+  border-bottom: 1px solid $primary-dark-color;
+  
+  color: $primary-dark-color;
+  font-size: 1.8rem;
+
+  padding: 2rem 5px;
+
+  &::placeholder {
+    color: $primary-dark-color;
+  }
+
+  &:focus {
+    border-color: $main-color;
+    outline: none;
+  }
+
+  &:focus, &.ng-dirty {
+    ~ .e-form-label--overInput {
+      top: -50px;
+      color: $main-color;
+    }
+  }
+
+  &--readOnly {
+    border-bottom: unset;
+  }
+
+  &--checkbox {
+    position: absolute;
+    visibility: hidden;
+    color: $text-color;
+    
+    ~ .custom-checkbox {
+      display: inline-block;
+      border: 2px solid $text-color;
+      vertical-align: text-bottom;
+      border-radius: 2px;
+      @include square(18px);
+    }
+
+    &:checked {
+
+      ~ .custom-checkbox {
+        font-family: 'resources-icons' !important;
+        speak: never;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 18px;
+        border: none;
+        &::before {
+          content: "\e904";
+          color: $second-color;
+        }
+      }
+      
+    }
+
+    &:disabled ~ .custom-checkbox  {
+      cursor: not-allowed;
+    }
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    ~ .e-form-label--overInput {
+      top: -50px;
+      color: $main-color;
+    }
+  }
+
+  &--textarea {
+    resize: none;
+    height: 100%;
+
+    ~ .e-form-label--overInput {
+      bottom: 120px;
+    }
+  }
+}
+
+.e-form-label {
+  cursor: pointer;
+  color: $text-color;
+  font-size: 1.8rem;
+  @include transition(all);
+
+  &--overInput {
+    position: absolute;
+    left: 5px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    height: 18px;
+  }
+}
+
+.e-form-search {
+  height: 30px;
+  border: 1px solid $second-color;
+  color: $second-color;
+  padding: 0 30px;
+  border-radius: 3px;
+  font-size: 1.6rem;
+
+  &::placeholder {
+    font-weight: bold;
+    color: $second-color;
+  }
+
+  ~.icon-search {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    font-size: 1.6rem;
+  }
+}
+
+.e-form-radio {
+  position: absolute;
+  visibility: hidden;
+
+  ~ .custom-radio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include square(20px);
+    background-color: #fff;
+    border-radius: 4px;
+    margin-right: 5px;
+    cursor: pointer;
+    @include transition(all);
+  }
+
+  &:checked {
+
+    ~ .custom-radio {
+      background-color: $second-color;
+      color: #fff;
+    }
+  }
+}
+
+input[type="file"] {
+  position: absolute;
+  left: 0;
+  visibility: hidden;
+}
+
+.e-form {
+
+  &__section {
+    margin-bottom: 2rem;
+    padding: 0 4rem;
+
+    .e-form-control {
+      border-color: $second-color;
+      padding: 1rem 5px;
+    }
+    .e-form-label {
+      color: $second-color !important;
+    }
+  }
+  &__title {
+    text-decoration: underline;
+    color: $primary-dark-color;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}

@@ -1,0 +1,123 @@
+<section class="o-section-content">
+
+    <div class="o-section-content__heading">
+        <h4 class="e-card-title">
+            All Attendances
+        </h4>
+
+        <div class="g-actions">
+            <button class="e-btn e-secondary-btn e-btn e-btn--success mr-2" (click)="approveAttendances()" [disabled]="!selectedIds.length">
+                Approve
+              </button>
+            </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="o-table table">
+            <thead class="o-table__head">
+                <tr>
+                    <th (click)="selectAll()" class="o-table__th" scope="col">
+                        {{isAllSelected ?'UNSELECT ALL':'SELECT ALL'}}</th>
+                    <th class="o-table__th" scope="col">Name</th>
+                    <th class="o-table__th" scope="col">Worked Hours</th>
+                    <th class="o-table__th" scope="col">Over Time</th>
+                    <th class="o-table__th" scope="col">Net Payment</th>
+                    <th class="o-table__th" scope="col">Aciton</th>
+                </tr>
+            </thead>
+
+            <tbody class="o-table__body">
+                <tr class="o-table__row" *ngFor="let attendance of attendances">
+                    <td class="o-table__data">
+                        <fieldset class="e-form-group">
+                            <label class="e-form-label">
+                                <input class="e-form-control--checkbox" type="checkbox" [value]="attendance.id"
+                                    [checked]="attendance['checked']"
+                                    (change)="onAttendanceCheck($event.target.checked, attendance)" />
+                                <span class="custom-checkbox"></span>
+                            </label>
+                        </fieldset>
+                    </td>
+                    <td class="o-table__data">{{attendance.resourceName}}</td>
+                    <td class="o-table__data">{{attendance.workedHours.toFixed(2)}}</td>
+                    <td class="o-table__data">{{attendance.overTime.toFixed(2)}}</td>
+                    <td class="o-table__data">{{attendance.netPayment.toFixed(2)}}</td>
+                    <td class="o-table__data">
+                        <button (click)="attendance.comment?review(attendance): reject(attendance.id)" class="e-btn  e-secondary-btn" [ngClass]="{'e-btn--failure':!attendance.comment}">
+                            {{attendance.comment?'Review':'Reject'}}
+                          </button>
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+
+
+
+
+    <div class="g-page-control">
+        <app-pagination-size (selectedPageSizeEvent)="onChangeSize($event)"></app-pagination-size>
+        <div class="g-page-pagination">
+            <app-pagination [currenPage]="1" [totalPagesSize]="pagesTotalNumber"
+                (selectedPageEvent)="onChangePage($event)">
+            </app-pagination>
+        </div>
+    </div>
+</section>
+<dx-popup
+  [width]="640"
+  [height]="400"
+  [showTitle]="true"
+  [title]="'Review Attendances'"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="rejectPopup"
+>
+  <div
+    *dxTemplate="let data of 'content'"
+    class="d-flex flex-column align-content-center end-popup"
+  >
+    <div class="comment-form">
+      <fieldset class="e-form-group e-form-group--withMargin">
+        <label class="e-form-label" for="comment"> Comment </label>
+        <textarea
+          class="e-form-control e-form-control--textarea"
+          readonly
+          disabled
+          id="comment"
+        >{{reviewException.comment}}</textarea>
+      </fieldset>
+      <fieldset class="e-form-group e-form-group--withMargin">
+        <label class="e-form-label" for="exceptionHours"> Exception Time </label>
+        <input
+          [value]="reviewException['exceptionHours']"
+          readonly
+          disabled
+          class="e-form-control"
+          id="exceptionHours"
+          maxlength="2"
+        />
+      </fieldset>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button class="e-text-btn e-btn mr-3" (click)="endTimePopup = false">
+        Cancel
+      </button>
+      <button
+        class="e-secondary-btn mr-3 e-btn--failure e-btn"
+        (click)="rejectException()"
+      >
+        Reject exception
+      </button>
+      <button
+        class="e-secondary-btn e-btn--success e-btn"
+        (click)="approveException()"
+      >
+        Approve exception
+      </button>
+    </div>
+  </div>
+</dx-popup>

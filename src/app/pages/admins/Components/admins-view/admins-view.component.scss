@@ -1,0 +1,44 @@
+@import "../../../../../assets/scss/settings/variables";
+
+.admins {
+  margin-top: 20px;
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2rem;
+    position: relative;
+
+    .icon-profile {
+      font-size: 5rem;
+      margin-right: 10px;
+      &::before {
+        color: $second-color;
+      }
+    }
+
+    h5 {
+      font-size: 2rem;
+      flex-grow: 1;
+    }
+    span {
+      color: $second-color;
+      font-size: 1.6rem;
+      font-weight: 400;
+    }
+
+    .icon-trash {
+      width: 30px;
+      height: 30px;
+      background-color: #C73333;
+      text-align: center;
+      line-height: 2;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      &::before {
+        color: #fff;
+      }
+    }
+  }
+}

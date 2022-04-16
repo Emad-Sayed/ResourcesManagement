@@ -1,0 +1,64 @@
+.e-main-btn {
+  @include resetBtn;
+  @include box(350, 55);
+  background-color: $main-color;
+  color: #fff;
+  font-size: 2.4rem;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  @include transition(background-color);
+
+  &--withPadding {
+    width: auto;
+    height: auto;
+    padding: 10px 40px;
+  }
+
+  &:hover {
+    background-color: $gradient-start;
+  }
+}
+
+.e-text-btn {
+  @include resetBtn;
+  color: $second-color;
+  font-size: 1.6rem;
+  font-weight: 400;
+  background-color: transparent;
+  padding: 0;
+  text-transform: capitalize;
+  padding: 7px 20px;
+
+  &--grey {
+    color: $text-color;
+  }
+}
+
+.e-secondary-btn {
+  @include resetBtn;
+  padding: 7px 20px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border-radius: 4px;
+  background-color: $light-blue;
+  color: #fff;
+}
+
+.e-btn {
+  &--success {
+    background-color: $success;
+  }
+  &--failure {
+    background-color: $failure;
+  }
+  &--neutral {
+    background-color: $yellow;
+  }
+  &--grey {
+    background-color: $text-color;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

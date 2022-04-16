@@ -1,0 +1,283 @@
+<section class="dashboard">
+  <div class="actions">
+    <div class="periods">
+      <fieldset class="e-form-group" *ngFor="let period of periods" >
+        <label [for]="period.name" class="e-form-label">
+          <input 
+          class="e-form-radio"
+           type="radio" 
+           name="periods" 
+           [value]="period.value"
+           [id]="period.name"
+           [checked]="period.value === 6"
+           (change)="onPeriodChange($event.target.value)">
+          <span class="custom-radio"></span>
+          {{period.name}}
+        </label>
+      </fieldset>
+    </div>
+    
+    <div class="d-flex align-items-center">
+        <p class="title__date">{{filterResultsFromToDate.from|date}} - {{filterResultsFromToDate.to|date}}</p>
+        <span class="resources-icon icon-calender"
+            (click)="showFilter? showFilter = null: showFilter = 'from';"></span>
+        <div class="filter-wrapper" *ngIf="showFilter">
+
+            <div class="datepicker-wrapper" [ngSwitch]="showFilter">
+                <div class="datepicker-buttons">
+                    <button class="datepicker-btn" [ngClass]="{'datepicker-btn--active': showFilter === 'from'}"
+                        type="button" (click)="showFilter = 'from'">
+                        From
+                        <br>
+
+                        {{filterResultsFromToDate.from|date}}
+                    </button>
+                    <button class="datepicker-btn" [ngClass]="{'datepicker-btn--active': showFilter === 'to'}"
+                        type="button" (click)="showFilter = 'to'">
+                        To
+                        <br>
+
+                        {{filterResultsFromToDate.to|date}}
+
+                    </button>
+                </div>
+                <div class="calender-wrapper">
+                    <dx-calendar #calendarFrom id="calendar-container" class="calender" *ngSwitchCase="'from'"
+                        [min]="minDateValue" [max]="maxDateValue" [firstDayOfWeek]="'0'"
+                        [disabled]="false" [(value)]="filterResultsFromToDate.from">
+                    </dx-calendar>
+
+                    <dx-calendar #calendarTo id="calendar-container" class="calender" *ngSwitchCase="'to'"
+                        [min]="minDateValue" [max]="maxDateValue" [firstDayOfWeek]="'0'"
+                        [disabled]="false" [(value)]="filterResultsFromToDate.to">
+                    </dx-calendar>
+
+                    <button class="e-main-btn e-main-btn--withPadding" (click)="filterResults()">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  
+  <div class="row sm-gutters">
+    <!-- #region tickets chart -->
+    <div class="col-xl-3 col-lg-6">
+      <div class="o-section-content card" id="chart3">
+        <h4 class="card__title">Total Cost</h4>
+        <div class="card__data">
+          {{totalCost}}$
+          <span class="resources-icon icon-decreasing"></span>
+        </div>
+        <div class="card__statistics">
+        </div>
+        <div class="card__chart">
+          <dx-chart class="dx-chart"
+          [dataSource]="totalCostGraph">
+          <dxo-size
+            [height]="100"
+            [width]="100">
+          </dxo-size>
+            <dxi-series argumentField="start"></dxi-series>
+            <dxo-legend [visible]="false"></dxo-legend>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+        </dx-chart>
+        </div>
+      </div>
+    </div>
+    <!-- #endregion tickets chart -->
+
+    <!-- #region work chart -->
+    <div class="col-xl-3 col-lg-6">
+      <div class="o-section-content card" id="chart4">
+        <h4 class="card__title">Worked</h4>
+        <div class="card__data">
+          {{totalWorkedHours}}
+          <span class="resources-icon icon-unchanged"></span>
+        </div>
+        <div class="card__statistics">
+        </div>
+        <div class="card__chart">
+          <dx-chart class="dx-chart"
+          [dataSource]="totalWorkedHoursGraph">
+          <dxo-size
+            [height]="100"
+            [width]="100">
+          </dxo-size>
+            <dxi-series argumentField="start"></dxi-series>
+            <dxo-legend [visible]="false"></dxo-legend>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+        </dx-chart>
+        </div>
+      </div>
+    </div>
+    <!-- #endregion work chart -->
+    <!-- #region productivity chart -->
+    <div class="col-xl-3 col-lg-6">
+      <div class="o-section-content card" id="chart1">
+        <h4 class="card__title">Approved Tasks</h4>
+        <div class="card__data">
+          {{totalApprovedTasks}}
+          <span class="resources-icon icon-increasing"></span>
+        </div>
+        <div class="card__statistics">
+          Pending: {{totalPendingTasks}}
+          <br>
+          Total: {{totalTasks}}
+        </div>
+        <div class="card__chart">
+          <dx-chart class="dx-chart"
+          [dataSource]="totalTasksGraph">
+          <dxo-size
+            [height]="100"
+            [width]="100">
+          </dxo-size>
+            <dxi-series argumentField="month"></dxi-series>
+            <dxo-legend [visible]="false"></dxo-legend>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+        </dx-chart>
+        </div>
+      </div>
+    </div>
+    <!-- #endregion productivity chart -->
+
+    <!-- #region spent chart -->
+    <div class="col-xl-3 col-lg-6">
+      <div class="o-section-content card" id="chart2">
+        <h4 class="card__title">Approved Trainings</h4>
+        <div class="card__data">
+          {{totalApprovedTraining}}
+          <span class="resources-icon icon-increasing"></span>
+        </div>
+        <div class="card__statistics">
+          Pending: {{totalPendingTraining}}
+          <br>
+          total: {{totalTasks}}
+        </div>
+        <div class="card__chart">
+          <dx-chart class="dx-chart"
+          [dataSource]="totalTrainingGraph">
+          <dxo-size
+            [height]="100"
+            [width]="100">
+          </dxo-size>
+            <dxi-series argumentField="month"></dxi-series>
+            <dxo-legend [visible]="false"></dxo-legend>
+            <dxo-tooltip [enabled]="true"></dxo-tooltip>
+        </dx-chart>
+        </div>
+      </div>
+    </div>
+    <!-- #endregion spent chart -->
+
+
+
+  </div>
+
+  <div class="row flex-basis-100 sm-gutters table-columns">
+
+    <!-- #region progress table -->
+    <div class="col-lg-auto col-12">
+
+      <div class="o-section-content card card--overflow h-100 align-items-center">
+        
+        <h4 class="card__title mb-3">Attendance</h4>
+
+        <div class="table-responsive">
+          <table class="o-table table">
+            <thead class="o-table__head">
+              <tr>
+                <th class="o-table__th" scope="col">Month</th>
+                <th class="o-table__th" scope="col">Hours</th>
+                <th class="o-table__th" scope="col">Cost</th>
+              </tr>
+            </thead>
+            <tbody class="o-table__body">
+              <tr class="o-table__row" *ngFor="let att of attendances">
+                <td class="o-table__data"> {{att.month|toAlphaMonth}} ,{{att.year}}</td>
+                <td class="o-table__data">{{att.netPayment.toFixed()}}</td>
+                <td class="o-table__data">{{att.workedHours.toFixed()}}$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    <!-- #endregion progress table -->
+
+    <!-- #region Tickets Sheet table -->
+    <div class="col-lg">
+        
+      <div class="o-section-content card card--overflow h-100 align-items-center">
+        
+        <h4 class="card__title mb-3">Tasks</h4>
+
+        <div class="table-responsive">
+          <table class="o-table table">
+            <thead class="o-table__head">
+              <tr>
+                <th class="o-table__th" scope="col">Month</th>
+                <th class="o-table__th" scope="col">Pending</th>
+                <th class="o-table__th" scope="col">Approved</th>
+                <th class="o-table__th" scope="col">Rejected</th>
+                <th class="o-table__th" scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody class="o-table__body">
+              <tr class="o-table__row" *ngFor="let task of tasks">
+                <td class="o-table__data"> {{task.month|toAlphaMonth}} ,{{task.year}}</td>
+                <td class="o-table__data o-table__data--pending">{{task.pending}}</td>
+                <td class="o-table__data o-table__data--accepted">{{task.approved}}</td>
+                <td class="o-table__data o-table__data--rejected">{{task.rejected}}</td>
+                <td class="o-table__data o-table__data--dark">{{task.totalTasks}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- #endregion Tickets Sheet table -->
+
+    
+
+    <!-- #region progress table -->
+    <div class="col-lg">
+        
+      <div class="o-section-content card card--overflow h-100 align-items-center">
+        
+        <h4 class="card__title mb-3">Trainings</h4>
+
+        <div class="table-responsive">
+          <table class="o-table table">
+            <thead class="o-table__head">
+              <tr>
+                <th class="o-table__th" scope="col">Month</th>
+                <th class="o-table__th" scope="col">Pending</th>
+                <th class="o-table__th" scope="col">Approved</th>
+                <th class="o-table__th" scope="col">Rejected</th>
+                <th class="o-table__th" scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody class="o-table__body">
+              <tr class="o-table__row" *ngFor="let training of trainings">
+                <td class="o-table__data"> {{training.month|toAlphaMonth}} ,{{training.year}}</td>
+                <td class="o-table__data o-table__data--pending">{{training.pending}}</td>
+                <td class="o-table__data o-table__data--accepted">{{training.approved}}</td>
+                <td class="o-table__data o-table__data--rejected">{{training.rejected}}</td>
+                <td class="o-table__data o-table__data--dark">{{training.totalTasks}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- #endregion progress table -->
+
+  </div>
+</section>

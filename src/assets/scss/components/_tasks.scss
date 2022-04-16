@@ -1,0 +1,118 @@
+.tasks {
+
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__actions {
+    display: flex;
+  }
+
+  &__wrapper {
+    overflow: auto;
+    padding: 10px ;
+    margin-bottom: 20px;
+  }
+
+  .task {
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+    padding: 20px;
+    margin-bottom: 10px;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 100%;
+      background-color: transparent;
+      border-left: 3px solid;
+      border-radius: 10px;
+    }
+    &:nth-child(n)::after {
+      border-color: $green;
+    }
+    &:nth-child(2n)::after {
+      border-color: $yellow;
+    }
+    &:nth-child(3n)::after {
+      border-color: $dark-blue;
+    }
+    &__head {
+      display: flex;
+      align-items: center;
+
+      .e-form-group {
+        margin-right: 15px;
+      }
+      
+    }
+
+    &__title {
+      background-color: #EEEEEE;
+      color: $primary-dark-color;
+      padding: 10px;
+      border-radius: $border-radius;
+      font-weight: 400;
+      flex-basis: 100%;
+      word-break: break-word;
+      font-size: 18px;
+    }
+
+    &__content {
+      padding: 10px 32px;
+      padding-bottom: 0;
+    }
+
+    &__desc {
+      color: $second-color;
+      height: 60px;
+      word-break: break-word;
+      font-size: 16px;
+    }
+
+    &__states {
+      border-top: $border;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 20px;
+    }
+  }
+
+  @media only screen and (max-width: 992px) {
+
+    &__heading {
+      flex-direction: column;
+    }
+
+    &__actions {
+      flex-direction: column;
+      margin-top: 10px;
+      .e-btn {
+        margin-bottom: 10px;
+      }
+    }
+    
+    .task {
+
+      &__desc {
+        height: auto;
+      }
+
+      &__states {
+        flex-wrap: wrap;
+        div {
+          flex-basis: 100%;
+          margin: 3px 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@import '../../../../assets/scss/settings/variables';
+
+.spinner-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: #fff, $alpha: 0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+    width: 70px;
+    margin: auto;
+    background: transparent;
+    path {
+        fill: $main-color;
+    }
+}

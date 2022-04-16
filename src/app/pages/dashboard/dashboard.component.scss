@@ -1,0 +1,355 @@
+@import "../../../assets/scss/settings/variables";
+@import "../../../assets/scss/tools/mixins";
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 135px);
+
+  .actions {
+    position: relative;
+    background-color: $gradient-start;
+    padding: 1rem;
+    margin-bottom: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: $border-radius;
+
+    .periods {
+      display: flex;
+      align-items: center;
+      .custom-radio {
+        border-radius: 50%;
+        margin-right: 5px;
+        border: 2px solid #fff;
+        background-color: transparent;
+      }
+      .e-form-label {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        font-size: 1.6rem;
+        color: #fff;
+      }
+      .e-form-radio {
+  
+        &:checked ~ .custom-radio {
+          // border-color: $second-color;
+          // background-color: #fff;
+          &::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            @include square(10px);
+            background-color: #fff;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+    
+    .resources-icon {
+      // @include gradient-text;
+      color: #fff;
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
+    .title__date {
+      font-size: 1.6rem;
+      margin-right: 10px;
+    }
+  }
+
+  .filter-wrapper {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    z-index: 1;
+
+    .datepicker-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .datepicker-buttons {
+      display: flex;
+      justify-content: space-between;
+
+      .datepicker-btn {
+        @include resetBtn;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-basis: 49%;
+        height: 60px;
+        background-color: #fff;
+        color: $gradient-start;
+        font-size: 1.6rem;
+        border-radius: 10px;
+        box-shadow: $box-shadow;
+        margin-bottom: 5px;
+        font-weight: bold;
+
+        &--active {
+          background-color: $gradient-start;
+          color: #fff;
+        }
+      }
+    }
+
+    .calender-wrapper {
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: $box-shadow;
+      background-color: #fff;
+    }
+    .e-main-btn {
+      background-color: $gradient-start;
+      margin: auto;
+      margin-top: 20px;
+      display: block;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    .calender::ng-deep {
+      font-family: inherit !important;
+      .dx-calendar-navigator .dx-calendar-caption-button,
+      .dx-calendar-navigator .dx-button {
+        border: none;
+      }
+      .dx-calendar-navigator .dx-calendar-caption-button.dx-button .dx-button-content,
+      .dx-button .dx-icon {
+        color: $main-color;
+      }
+      .dx-calendar-cell.dx-calendar-selected-date, .dx-calendar-cell.dx-calendar-selected-date.dx-calendar-today {
+        box-shadow: unset;
+        background-color: $main-color;
+        color: #fff;
+      }
+      .dx-calendar-body thead tr th {
+        box-shadow: unset;
+        color: $main-color;
+      }
+      .dx-calendar-cell {
+        color: #626262;
+      }
+      .dx-calendar-cell.dx-calendar-other-view:not(.dx-calendar-selected-date), .dx-calendar-cell.dx-calendar-empty-cell:not(.dx-calendar-selected-date) {
+        color: #bfbfbf;
+      }
+    }
+  }
+
+  .card {
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    margin-top: 10px;
+    font-size: 10px;
+    border: none;
+
+    @media screen and (min-width: 1200px) {
+      font-size: 8px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      font-size: 10px;
+    }
+
+    &__title {
+      font-size: 2em;
+      &.mb-5 {
+        margin-bottom: 30px !important;
+      }
+    }
+
+    &__data {
+      font-size: 4em;
+      font-weight: bold;
+
+      .resources-icon {
+        font-size: 2rem;
+      }
+    }
+
+    &__chart {
+      position: absolute;
+      top: 20px;
+      right: 0;
+
+      .dx-chart::ng-deep {
+        .dxc-axes-group,
+        .dxc-grids-group {
+          display: none;
+        }
+      }
+    }
+
+    &__statistics {
+      font-size: 10px;
+      height: 20px;
+      color: $text-color;
+    }
+
+    &__foot {
+      color: $text-color;
+      text-align: center;
+      padding: 10px 0;
+      border-top: $border;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    &#chart1 {
+      .card__data {
+        color: $green;
+      }
+
+      .dx-chart::ng-deep {
+        .dxc-markers {
+          fill: $second-color !important;
+        } 
+        .dxc-elements {
+          stroke: $second-color !important;
+        } 
+      } 
+    }
+    &#chart2 {
+      .card__data {
+        color: $second-color;
+      }
+
+      .dx-chart::ng-deep {
+        .dxc-markers  {
+          fill: $green !important;
+        } 
+        .dxc-elements {
+          stroke: $green !important;
+        } 
+      } 
+    }
+    &#chart3 {
+      .card__data {
+        color: $yellow;
+      }
+
+      .dx-chart::ng-deep {
+        .dxc-markers {
+          fill: $yellow !important;
+        } 
+        .dxc-elements {
+          stroke: $yellow !important;
+        } 
+      } 
+    }
+    &#chart4 {
+      .card__data {
+        color: $violet;
+      }
+
+      .dx-chart::ng-deep {
+        .dxc-markers {
+          fill: $violet !important;
+        } 
+        .dxc-elements {
+          stroke: $violet !important;
+        } 
+      } 
+    }
+  }
+
+  .table {
+    .project-label {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-transform: capitalize;
+      margin-right: 5px;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 25px;
+    }
+    .o-table__data {
+      vertical-align: middle;    
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+    .o-table__row {
+      &:nth-child(6n + 1) .project-label {
+        background-color: $dark-blue;
+      }
+      &:nth-child(6n + 2) .project-label {
+        background-color: $green;
+      }
+      &:nth-child(6n + 3) .project-label {
+        background-color: $lemon;
+      }
+      &:nth-child(6n + 4) .project-label {
+        background-color: $yellow;
+      }
+      &:nth-child(6n + 5) .project-label {
+        background-color: $light-red;
+      }
+      &:nth-child(6n + 6) .project-label {
+        background-color: $light-blue;
+      }
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    height: auto;
+
+    .actions {
+      .title__date {
+        font-size: 1.4rem;
+      }
+      .d-flex {
+        flex-basis: 40%;
+        justify-content: flex-end;
+      }
+      .periods {
+        flex-direction: column;
+        align-items: flex-start;
+        .e-form-group {
+          margin: 2px 0;
+        }
+        .e-form-label {
+          margin-right: 0;
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+}
+
+.table-responsive {
+  height: 100%;
+  max-height: unset;
+}
+.flex-basis-100 {
+  flex-basis: 100%;
+}
+.card--overflow {
+  overflow: auto;
+  max-height: 60vh;
+}
+.o-table__th {
+  font-size: 13px;
+}
+.table-columns {
+  .card {
+    padding: 20px 13px;
+    max-height: 50vh;
+    @media screen and (max-width: 992px) {
+      height: auto !important;
+    }
+  }
+}

@@ -1,0 +1,78 @@
+@import "../../../../assets/scss/settings/variables";
+@import "../../../../assets/scss/tools/mixins";
+
+header {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  position: relative;
+  top: 0;
+  // left: 118px;
+  z-index: 5;
+  // width: calc(100vw - 120px);
+  background-color: transparent;
+  border-top-left-radius: 50px;
+  // padding-left: 40px;
+  // padding-right: 40px;
+  // padding-bottom: 25px;
+
+  .title {
+    background-color: $primary-dark-color;
+    padding: 12px;
+    border-radius: $border-radius;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+
+    h2 {
+      font-size: 3.5em;
+      letter-spacing: unset;
+      text-transform: capitalize;
+      color: #fff;
+    }
+
+    h3 {
+      font-size: 3em;
+      letter-spacing: unset;
+      text-transform: capitalize;
+      color: $main-light-color;
+      small {
+        font-weight: 300;
+      }
+    }
+
+    .icon-info {
+      font-size: 1.6rem;
+      position: relative;
+      top: -10px;
+    }
+
+    &__date {
+      color: $text-color;
+      font-size: 2.5rem;
+      color: #fff;
+      strong {
+        font-weight: 600;
+      }
+    }
+
+    .icon-switch {
+      color: #fff;
+      font-size: 2.5rem;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    .title { 
+      font-size: 5px;
+
+      &__date {
+        display: none;
+      }
+    }
+  }
+  
+}

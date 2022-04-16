@@ -1,0 +1,113 @@
+<section class="o-section-content">
+  <div class="o-section-content__heading">
+    <h3>Add Admin</h3>
+
+    <div class="o-actions">
+      <button class="e-text-btn e-text-btn--grey" routerLink="../">
+        Cancel
+      </button>
+      <button class="e-secondary-btn" (click)="addAdmin()">Add Admin</button>
+    </div>
+  </div>
+
+  <form class="e-form" [formGroup]="addAdminForm">
+    <div class="row e-form__section">
+      <div class="col-6">
+        <h4 class="e-form__title">Admin Info</h4>
+        <div class="d-flex flex-wrap">
+          <div class="o-image-upload">
+            <span class="resources-icon icon-profile" *ngIf="!imgPath"></span>
+            <span class="o-image-upload__img" *ngIf="imgPath">
+              <img class="img-fluid" [src]="imgPath" >
+            </span>
+
+            <label for="imgUpload">
+              <span class="resources-icon icon-upload o-image-upload__icon">
+              <input type="file" id="imgUpload" class="form-control" (change)="getBase64($event)"
+              accept="image/x-png,image/jpeg">
+              </span>
+            </label>
+            <span
+              class="resources-icon icon-trash o-image-upload__icon mr-0"
+              (click)="deleteImg()"
+            ></span>
+          </div>
+          <div class="flex-basis-100">
+            <fieldset class="e-form-group e-form-group--withMargin">
+              <input
+                formControlName="userName"
+                class="e-form-control"
+                type="text"
+                id="resourceName"
+                aria-required="true"
+              />
+              <label
+                class="e-form-label e-form-label--overInput"
+                for="resourceName"
+              >
+                Name
+              </label>
+            </fieldset>
+            <fieldset class="e-form-group e-form-group--withMargin">
+              <input
+                formControlName="password"
+                class="e-form-control"
+                type="password"
+                id="password"
+                aria-required="true"
+              />
+              <label
+                class="e-form-label e-form-label--overInput"
+                for="password"
+              >
+                Password
+              </label>
+              <p *ngIf="addAdminForm.controls['password'].errors?.minlength">
+                Must be greater than 6
+              </p>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <h4 class="e-form__title">Contact Info</h4>
+        <fieldset class="e-form-group e-form-group--withMargin">
+          <input
+            formControlName="email"
+            class="e-form-control"
+            type="text"
+            id="resourceEmail"
+            aria-required="true"
+          />
+          <label
+            class="e-form-label e-form-label--overInput"
+            for="resourceEmail"
+          >
+            Email
+          </label>
+          <p *ngIf="addAdminForm.controls['email'].errors?.email">
+            Invalid Email
+          </p>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="row e-form__section">
+      <div class="col-6">
+        <h4 class="e-form__title">Work Info</h4>
+        <fieldset class="e-form-group e-form-group--withMargin">
+          <input
+            formControlName="jobTitle"
+            class="e-form-control"
+            type="text"
+            id="jobTitle"
+            aria-required="true"
+          />
+          <label class="e-form-label e-form-label--overInput" for="jobTitle">
+            JobTitle
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </form>
+</section>

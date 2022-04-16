@@ -1,0 +1,109 @@
+<section class="login">
+  
+  <div class="o-logo-symbol"></div>
+  
+  <div class="row o-full-height">
+    <!-- #region logo part-->
+    <div class="col-md-7">
+      
+      <div class="login__logo-wrapper o-gradient o-flex-centralize">
+
+        <div class="login__logo">
+          <img 
+          class="img-fluid" 
+          src="../../../../assets/images/logo.svg" 
+          alt="resources logo ">
+        </div>
+
+        <div class="login__powered-by">
+          <img 
+          class="img-fluid" 
+          src="../../../../assets/images/powered-by.svg" 
+          alt="powered by proemcs">
+        </div>
+
+      </div>
+      
+    </div>
+    <!-- #endregion logo part-->
+    
+    <!-- #region login form -->
+    <div class="col-md-5">
+
+      <div class="login__form-wrapper o-flex-centralize">
+        <h1>Log In</h1>
+
+        <form 
+        class="login-form" 
+        [formGroup]="loginForm" 
+        (ngSubmit)="loginUser()">
+
+          <fieldset class="e-form-group e-form-group--withMargin">
+            <input 
+            formControlName="username"
+            class="e-form-control"
+            type="text"
+            autocomplete="username"
+            id="username"
+
+            aria-required="true">
+
+            <label 
+            class="e-form-label e-form-label--overInput"
+            for="username"
+            aria-label="username">
+              Username*
+            </label>
+          </fieldset>
+
+          <fieldset class="e-form-group e-form-group--withMargin">
+            <input 
+            formControlName="password"
+            class="e-form-control"
+            type="password"
+            autocomplete="current-password"
+            aria-required="true"
+            id="pass">
+
+            <label 
+            class="e-form-label e-form-label--overInput"
+            for="pass"
+            aria-label="password">
+              Password*
+            </label>
+          </fieldset>
+
+          <div class="login-form__user-pref">
+            <fieldset class="e-form-group">
+              <label 
+              class="e-form-label" 
+              for="remember-me"
+              aria-label="remember me">
+                <input 
+                formControlName="remember"
+                class="e-form-control--checkbox"
+                type="checkbox"
+                id="remember-me"
+                aria-required="false">
+                <span class="custom-checkbox"></span>
+                Remember Me
+              </label>
+            </fieldset>
+
+            <a class="e-link">Forgot Password?</a>
+          </div>
+
+          <button 
+          class="e-main-btn" 
+          type="submit">
+            Login
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+    <!-- #endregion login form -->
+  </div>
+
+</section>

@@ -1,0 +1,282 @@
+<section class="o-section-content">
+  <div class="row h-100 sm-gutters">
+    <div class="col-md-6">
+      <div class="o-card h-75">
+        <dx-scheduler
+          [dataSource]="appointmentsData"
+          [views]="['month']"
+          currentView="month"
+          [firstDayOfWeek]="1"
+          [startDayHour]="8"
+          [endDayHour]="20"
+          [cellDuration]="60"
+          [currentDate]="currentDate"
+          (onCellClick)="dayClicked($event)"
+          (onAppointmentFormOpening)="onEventPopUp()"
+          (onAppointmentAdded)="onEventAdd($event)"
+        >
+          <!-- <dxi-resource
+            fieldExpr="ownerId"
+            [allowMultiple]="true"
+            [dataSource]="resourcesData"
+            label="Owner"
+            [useColorAsDefault]="true"
+          ></dxi-resource> -->
+        </dx-scheduler>
+      </div>
+
+      <div class="o-card timers">
+        <button
+          (click)="startWork()"
+          [disabled]="attendance.isAttendanceSet"
+          class="e-secondary-btn timers__btn e-btn"
+        >
+          <span class="resources-icon icon-play"></span>
+          Start
+        </button>
+
+        <div class="timers__gauge">
+          <!-- {{attendance.hours}} -->
+
+          <!-- <app-circle-progress [progressPercentage]="attendance.hours" [progressTitle]="'Hours'"></app-circle-progress>  -->
+          <circle-progress
+            [percent]="(attendance.hours * 100) / 24"
+            [subtitle]="attendance.hours"
+          ></circle-progress>
+          <h5>Hours</h5>
+        </div>
+
+        <div class="timers__gauge">
+          <!-- {{attendance.minues}}
+          {{attendance.seconds}} -->
+          <circle-progress
+            [percent]="(attendance.minues * 100) / 60"
+            [subtitle]="attendance.minues"
+          ></circle-progress>
+          <h5>Minutes</h5>
+        </div>
+
+        <!-- <div class="timers__gauge">
+          <circle-progress  [percent]="(attendance.seconds*100)/60" [subtitle]="attendance.seconds"></circle-progress>
+          <h5>Seconds</h5>
+        </div> -->
+
+        <button
+          (click)="endTimePopup = true"
+          [disabled]="!attendance.isAttendanceSet"
+          class="e-secondary-btn timers__btn e-btn"
+        >
+          <span class="resources-icon icon-stop"></span>
+          End
+        </button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="o-card h-100">
+        <div class="o-tabs">
+          <button
+            class="o-tabs__btn"
+            [ngClass]="{ 'o-tabs__btn--active': activeTab === 'tasks' }"
+            (click)="activeTab = 'tasks'"
+          >
+            Tasks
+          </button>
+          <button
+            class="o-tabs__btn"
+            [ngClass]="{ 'o-tabs__btn--active': activeTab === 'trainings' }"
+            (click)="activeTab = 'trainings'"
+          >
+            Trainings
+          </button>
+        </div>
+
+        <div class="tasks" [ngSwitch]="activeTab">
+          <div class="tasks__wrapper" *ngSwitchCase="'tasks'">
+            <div *ngFor="let task of tasks; let i = index" class="task">
+              <div class="task__head">
+                <span>{{ i + 1 }}-</span>
+
+                <h5 class="task__title">
+                  {{ task.name }}
+
+                  <button
+                    class="e-btn e-secondary-btn"
+                    (click)="closeAssignment(task.taskId, 1)"
+                  >
+                    Done
+                  </button>
+                </h5>
+              </div>
+
+              <div class="task__content">
+                <p class="task__desc">
+                  {{ task.description }}
+                </p>
+
+                <div class="task__states">
+                  <div>
+                    <span class="resources-icon icon-play"></span>
+                    {{ task.startDate | date }}
+                  </div>
+                  <div>
+                    <span class="resources-icon icon-stop"></span>
+                    {{ task.endDate | date }}
+                  </div>
+                  <mark
+                    class="state-label"
+                    [ngClass]="
+                      task.taskStateId == 1
+                        ? 'state-label--new'
+                        : 'state-label--rejected'
+                    "
+                  >
+                    {{ task.taskStateId == 1 ? "new" : "rejected" }}
+                  </mark>
+                </div>
+              </div>
+            </div>
+            <div class="g-page-control" *ngIf="tasks?.length">
+              <app-pagination-size
+                (selectedPageSizeEvent)="onChangeTaskSize($event)"
+              ></app-pagination-size>
+
+              <div class="g-page-pagination">
+                <app-pagination
+                  [currenPage]="taskQuery.pageNumber"
+                  [totalPagesSize]="taskTotalRows"
+                  (selectedPageEvent)="onChangeTasksPage($event)"
+                ></app-pagination>
+              </div>
+            </div>
+          </div>
+
+          <div class="tasks__wrapper" *ngSwitchCase="'trainings'">
+            <div *ngFor="let train of trainings; let i = index" class="task">
+              <div class="task__head">
+                <span>{{ i + 1 }}-</span>
+
+                <h5 class="task__title">
+                  {{ train.name }}
+
+                  <button
+                    class="e-btn e-secondary-btn"
+                    (click)="closeAssignment(train.taskId, 2)"
+                  >
+                    Done
+                  </button>
+                </h5>
+              </div>
+
+              <div class="task__content">
+                <p class="task__desc">
+                  {{ train.description }}
+                </p>
+
+                <div class="task__states">
+                  <div>
+                    <span class="resources-icon icon-play"></span>
+                    {{ train.startDate | date }}
+                  </div>
+                  <div>
+                    <span class="resources-icon icon-stop"></span>
+                    {{ train.endDate | date }}
+                  </div>
+                  <mark
+                    class="state-label"
+                    [ngClass]="
+                      train.taskStateId == 1
+                        ? 'state-label--new'
+                        : 'state-label--rejected'
+                    "
+                  >
+                    {{ train.taskStateId == 1 ? "new" : "rejected" }}
+                  </mark>
+                </div>
+              </div>
+            </div>
+            <div class="g-page-control" *ngIf="trainings?.length">
+              <app-pagination-size
+                (selectedPageSizeEvent)="onChangeTrainSize($event)"
+              ></app-pagination-size>
+
+              <div class="g-page-pagination">
+                <app-pagination
+                  [currenPage]="trainQuery.pageNumber"
+                  [totalPagesSize]="trainingTotalRows"
+                  (selectedPageEvent)="onChangeTrainingsPage($event)"
+                ></app-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<dx-popup
+  [width]="640"
+  [height]="430"
+  [showTitle]="true"
+  [title]="'Confirm End Work'"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="true"
+  [(visible)]="endTimePopup"
+>
+  <div
+    *dxTemplate="let data of 'content'"
+    class="d-flex flex-column align-content-center end-popup"
+    [formGroup]="exceptionAttendanceForm"
+  >
+    <ng-container *ngIf="!showCommentForm">
+      <span class="resources-icon icon-notice text-center"></span>
+
+      <p class="text-center my-3">Are you sure you want to end work ?</p>
+    </ng-container>
+    <div class="comment-form" *ngIf="showCommentForm">
+      <fieldset class="e-form-group">
+        <label class="e-form-label" for="comment"> Comment </label>
+        <textarea
+          formControlName="comment"
+          class="e-form-control e-form-control--textarea"
+          id="comment"
+        ></textarea>
+      </fieldset>
+      <fieldset class="e-form-group e-form-group--withMargin">
+        <label class="e-form-label" for="exceptionHours"> Exception Time </label>
+        <input
+          type="number"
+          formControlName="exceptionHours"
+          class="e-form-control"
+          id="exceptionHours"
+          maxlength="2"
+        />
+      </fieldset>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button class="e-text-btn e-btn mr-3" (click)="endTimePopup = false">
+        Cancel
+      </button>
+      <button
+        class="e-secondary-btn e-btn--success e-btn"
+        [disabled]="exceptionAttendanceForm.invalid && showCommentForm"
+        (click)="endWork()"
+      >
+        Done
+      </button>
+    </div>
+    <fieldset class="e-form-group mt-4">
+      <label class="e-form-label">
+        <input
+          class="e-form-control--checkbox"
+          type="checkbox"
+          [checked]="showCommentForm"
+          (change)="showCommentForm = !showCommentForm"
+        />
+        <span class="custom-checkbox"></span>
+        Want to add comment before confirm?
+      </label>
+    </fieldset>
+  </div>
+</dx-popup>

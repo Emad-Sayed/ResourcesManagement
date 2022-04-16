@@ -1,0 +1,57 @@
+a.e-link {
+  color: $text-color;
+  cursor: pointer;
+  @include transition(color);
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &--noStyle {
+    color: #fff;
+    &:hover {
+      text-decoration: unset;
+    }
+  }
+}
+
+.e-icon-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: $border-radius;
+  @include transition(all);
+  border: 2px solid transparent;
+
+  .resources-icon {
+    color: #fff;
+    @include transition(all);
+
+    &::before {
+      color: inherit;
+    }
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &:hover, &--active {
+    border-color: #fff;
+  }
+
+  &--active {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 100%;
+      right: -25px;
+      top: 0;
+      background-color: $main-light-color;
+      border-radius: $border-radius;
+    }
+  }
+}
